@@ -1,0 +1,145 @@
+/* E:/Bridgeon/.../src/components/Quiz.css */
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #2c1a36; /* Dark purple Kahoot background */
+  font-family: 'Montserrat', sans-serif; /* Kahoot-like font */
+  color: white;
+}
+
+.quiz-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* Header Text (Question counter) */
+.quiz-container h3 {
+  font-size: 1.2rem;
+  color: #a29bfe;
+  margin-bottom: 5px;
+}
+
+/* Score Display */
+.quiz-container p {
+  font-size: 1rem;
+  color: #fab1a0;
+  margin-bottom: 20px;
+}
+
+/* Main Question Text */
+.quiz-container h1 {
+  font-size: 2rem;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+/* --- Options Grid --- */
+.options-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 columns like image 5 */
+  gap: 15px; /* space between boxes */
+  width: 80%;
+  max-width: 1000px;
+}
+
+/* Basic styling for each option button */
+.options-list button {
+  border: none;
+  border-radius: 8px;
+  padding: 20px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  height: 200px; /* Big boxes like image 5 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #eeeeee;
+  transition: transform 0.2s; /* smooth lift on hover */
+}
+
+.options-list button:hover:not(:disabled) {
+  transform: translateY(-5px);
+}
+
+.options-list button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7; /* faint when checking */
+}
+
+/* --- Colors from image 5 --- */
+.options-list button:nth-child(1) { background-color: #0c5796; } /* Blue (Box 1) */
+.options-list button:nth-child(2) { background-color: #037d7a; } /* Teal (Box 2) */
+.options-list button:nth-child(3) { background-color: #c18816; } /* Gold (Box 3) */
+.options-list button:nth-child(4) { background-color: #b13c4c; } /* Red (Box 4) */
+
+/* --- Dynamic Classes (States) --- */
+
+/* Blue border when an option is simply selected */
+.blue {
+  box-shadow: 0 0 0 5px #0984e3 inset; /* blue inner border */
+}
+
+/* Green overlay when checking and correct */
+.green {
+  background-color: #27ae60 !important; /* solid green */
+  animation: pulseCorrect 0.5s;
+}
+
+/* Red overlay when checking and wrong */
+.red {
+  background-color: #c0392b !important; /* solid red */
+  text-decoration: line-through; /* visual signal */
+}
+
+/* Submit/Restart Button styling */
+.quiz-container > button {
+  margin-top: 30px;
+  padding: 10px 30px;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  border: 1px solid white;
+  background-color: transparent;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.quiz-container > button:hover:not(:disabled) {
+  background-color: white;
+  color: #2c1a36;
+}
+
+/* --- Timer Animation Logic --- */
+
+/* The outer container for the line */
+.timer-container {
+  width: 80%;
+  max-width: 1000px;
+  height: 6px;
+  background-color: #333; /* dim track */
+  margin-bottom: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* The actual line that shrinks */
+.timer-bar {
+  height: 100%;
+  background-color: #e67e22; /* color of the timer */
+  transition: width 1s linear; /* this makes it look smooth as time changes */
+  position: absolute;
+  right: 0; /* starts at the right */
+}
+
+/* Keyframe for correct answer pulse */
+@keyframes pulseCorrect {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
