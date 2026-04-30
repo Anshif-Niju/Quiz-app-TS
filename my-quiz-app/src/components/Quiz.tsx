@@ -1,11 +1,11 @@
-import { useQuiz } from '../context/quizContext';
+import { useQuiz } from '../hooks/useQuiz';
 import { quizQuestion } from '../data';
 import './Quiz.css';
 
 function Quiz() {
-  const { 
-    currentIndex, userOption, correctAnswerIndex, 
-    status, timeLeft, score, selectOption, submitAnswer, restartQuiz 
+  const {
+    currentIndex, userOption, correctAnswerIndex,
+    status, timeLeft, score, selectOption, submitAnswer, restartQuiz
   } = useQuiz();
 
   if (status === 'finished') {
@@ -29,16 +29,16 @@ function Quiz() {
 
       <h3>Question {currentIndex + 1} / {quizQuestion.length}</h3>
       <p>Score: {score}</p>
-      <h1 style={{color:'white'}}>{currentQ.text}</h1>
+      <h1 style={{ color: 'white' }}>{currentQ.text}</h1>
 
       <div className="options-list">
         {currentQ.options.map((option: string, index: number) => {
-          let btnClass = "";
-          
-          if (userOption === index) btnClass = "blue"; 
+          let btnClass = '';
+
+          if (userOption === index) btnClass = 'blue';
           if (status === 'checking') {
-            if (index === correctAnswerIndex) btnClass = "green"; 
-            if (userOption === index && userOption !== correctAnswerIndex) btnClass = "red"; 
+            if (index === correctAnswerIndex) btnClass = 'green';
+            if (userOption === index && userOption !== correctAnswerIndex) btnClass = 'red';
           }
 
           return (
@@ -55,7 +55,7 @@ function Quiz() {
       </div>
 
       <button 
-        className="submit-btn" // CSS അപ്ലൈ ചെയ്യാൻ ക്ലാസ് നൽകി
+        className="submit-btn"
         onClick={submitAnswer} 
         disabled={userOption === null || status === 'checking'}
       >
