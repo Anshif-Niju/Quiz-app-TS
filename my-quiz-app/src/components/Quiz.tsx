@@ -1,18 +1,17 @@
-import { useQuiz } from '../hooks/useQuiz';
-import { quizQuestion } from '../data';
-import './Quiz.css';
+import { quizQuestion } from "../data";
+import { useQuiz } from "../hooks/useQuiz";
+import "./Quiz.css";
 
 function Quiz() {
-  const {
-    currentIndex, userOption, correctAnswerIndex,
-    status, timeLeft, score, selectOption, submitAnswer, restartQuiz
-  } = useQuiz();
+  const { currentIndex, userOption, correctAnswerIndex, status, timeLeft, score, selectOption, submitAnswer, restartQuiz } = useQuiz();
 
-  if (status === 'finished') {
+  if (status === "finished") {
     return (
       <div className="quiz-container">
         <h1>Results</h1>
-        <p>Score: {score} / {quizQuestion.length}</p>
+        <p>
+          Score: {score} / {quizQuestion.length}
+        </p>
         <button onClick={restartQuiz}>Try Again</button>
       </div>
     );
@@ -22,44 +21,36 @@ function Quiz() {
 
   return (
     <div className="quiz-container">
-
       <div className="timer-container">
         <div className="timer-bar" style={{ width: `${(timeLeft / 10) * 100}%` }} />
       </div>
 
-      <h3>Question {currentIndex + 1} / {quizQuestion.length}</h3>
+      <h3>
+        Question {currentIndex + 1} / {quizQuestion.length}
+      </h3>
       <p>Score: {score}</p>
-      <h1 style={{ color: 'white' }}>{currentQ.text}</h1>
+      <h1 style={{ color: "white" }}>{currentQ.text}</h1>
 
       <div className="options-list">
         {currentQ.options.map((option: string, index: number) => {
-          let btnClass = '';
+          let btnClass = "";
 
-          if (userOption === index) btnClass = 'blue';
-          if (status === 'checking') {
-            if (index === correctAnswerIndex) btnClass = 'green';
-            if (userOption === index && userOption !== correctAnswerIndex) btnClass = 'red';
+          if (userOption === index) btnClass = "blue";
+          if (status === "checking") {
+            if (index === correctAnswerIndex) btnClass = "green";
+            if (userOption === index && userOption !== correctAnswerIndex) btnClass = "red";
           }
 
           return (
-            <button 
-              key={index} 
-              className={btnClass} 
-              onClick={() => selectOption(index)}
-              disabled={status === 'checking'}
-            >
+            <button key={index} className={btnClass} onClick={() => selectOption(index)} disabled={status === "checking"}>
               {option}
             </button>
           );
         })}
       </div>
 
-      <button 
-        className="submit-btn"
-        onClick={submitAnswer} 
-        disabled={userOption === null || status === 'checking'}
-      >
-        {status === 'checking' ? 'Checking...' : 'Submit'}
+      <button className="submit-btn" onClick={submitAnswer} disabled={userOption === null || status === "checking"}>
+        {status === "checking" ? "Checking..." : "Submit"}
       </button>
     </div>
   );

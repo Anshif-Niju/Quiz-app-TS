@@ -1,7 +1,7 @@
-import { configureStore, createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { quizQuestion } from '../data';
+import { configureStore, createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { quizQuestion } from "../data";
 
-export type QuizStatus = 'idle' | 'checking' | 'finished';
+export type QuizStatus = "idle" | "checking" | "finished";
 
 export interface QuizState {
   currentIndex: number;
@@ -19,46 +19,46 @@ const initialState: QuizState = {
   score: 0,
   userOption: null,
   correctAnswerIndex: null,
-  status: 'idle',
+  status: "idle",
   timeLeft: QUESTION_TIME_LIMIT,
 };
 
 const quizSlice = createSlice({
-  name: 'quiz',
+  name: "quiz",
   initialState,
   reducers: {
     selectOption(state, action: PayloadAction<number>) {
-      if (state.status === 'idle') {
+      if (state.status === "idle") {
         state.userOption = action.payload;
       }
     },
     checkAnswer(state) {
-      if (state.status !== 'idle') {
+      if (state.status !== "idle") {
         return;
       }
 
       const correctIdx = quizQuestion[state.currentIndex].correctAnswer;
       state.correctAnswerIndex = correctIdx;
-      state.status = 'checking';
+      state.status = "checking";
 
       if (state.userOption === correctIdx) {
         state.score += 1;
       }
     },
     advanceQuestion(state) {
-      if (state.currentIndex + 1 < quizQuestion.length) {
+      if (state.currentIndex + 1 < quizQuestion.length){
         state.currentIndex += 1;
         state.userOption = null;
         state.correctAnswerIndex = null;
-        state.status = 'idle';
+        state.status = "idle";
         state.timeLeft = QUESTION_TIME_LIMIT;
         return;
       }
 
-      state.status = 'finished';
+      state.status = "finished";
     },
     tick(state) {
-      if (state.status === 'idle' && state.timeLeft > 0) {
+      if (state.status === "idle" && state.timeLeft > 0) {
         state.timeLeft -= 1;
       }
     },
@@ -68,8 +68,7 @@ const quizSlice = createSlice({
   },
 });
 
-export const { advanceQuestion, checkAnswer, restartQuiz, selectOption, tick } =
-  quizSlice.actions;
+export const { advanceQuestion, checkAnswer, restartQuiz, selectOption, tick } = quizSlice.actions;
 
 export const store = configureStore({
   reducer: {
